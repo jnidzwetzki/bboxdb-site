@@ -17,7 +17,7 @@
 					class="glyphicon glyphicon-eye-open"></span> View on GitHub
 				</a> &nbsp; &nbsp; &nbsp; <a target="_blank"
 					class="btn btn-lg btn-success"
-					href="http://jnidzwetzki.github.io/bboxdb/doc/installation.html"> <span
+					href="/documentation/installation/"> <span
 					class="glyphicon glyphicon-download"></span> Installation
 				</a>
 			</p>
