@@ -7,6 +7,10 @@ apt-get install ruby-dev ruby-bundler
 gem install --user-install bundler
 gem install --user-install jekyll
 
+# Syntax highlight
+gem install --user-install kramdown rouge
+rougify style github > assets/css/syntax.css
+
 bundle config set --local path 'vendor/bundle'
 bundle install
 

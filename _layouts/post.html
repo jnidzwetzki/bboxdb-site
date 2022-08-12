@@ -2,4 +2,39 @@
 layout: default
 ---
 
+<div class="container">
+<div class="row">
+   <div id="navigation" class="col-sm-2">
+
+<ul class="nav nav-list">
+    <li><a href="{{ site.baseurl }}/documentation/">Home</a></li>
+    {% for section in site.sections %}
+        {% assign attr = section[0] %}
+        {% assign label = section[1] %}
+
+        {% for page in site.categories[attr] %}
+            {% if forloop.first %}
+                <li class=nav-header>{{ label }}</li>
+            {% endif %}
+            <li data-order="{{ page.order }}"><a href="{{ site.baseurl }}{{ page.url }}">{{ page.title }}</a></li>
+        {% endfor %}
+    {% endfor %}
+<!-- List additional links. It is recommended to add a divider
+    e.g. <li class=divider></li> first to break up the content. -->
+<!--  <li class=divider></li>  -->   
+
+</ul>
+</div>
+
+<div id="content" class="col-sm-10">
+<div class=page-header>
+    <h2>{{ page.title }}
+        {% if page.subtitle %}<small>{{ page.subtitle }}</small>{% endif %}
+    </h2>
+</div>
 {{ content }}
+</div>
+
+</div>
+
+</div>

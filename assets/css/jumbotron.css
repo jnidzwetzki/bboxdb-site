@@ -3,10 +3,13 @@ body {
 	padding-bottom: 0px;
 }
 
+.footer-fixed {
+    position: fixed; 
+}
+
 .footer-bottom {
     min-height: 30px;
     width: 100%;
-    position: fixed; 
     bottom: 0%;
     opacity: 1;
 }

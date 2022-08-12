@@ -1,0 +1,29 @@
+@media (min-width: 1200px)
+.container {
+  width: 1170px;
+}
+@media (min-width: 992px)
+.container {
+  width: 970px;
+}
+media (min-width: 768px)
+.container {
+  width: 750px;
+}
+
+#navigation {
+    font-size: 0.9em;
+}
+
+#navigation li a {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#navigation .nav-header {
+    padding-left: 0;
+    padding-right: 0;
+    font-weight: bold;
+	font-size: 110%;
+}
+
