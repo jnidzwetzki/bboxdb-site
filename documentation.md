@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "BBoxDB Documentation"
+permalink: /documentation/
 ---
 
 <img src="/assets/images/logo.png" width="400">
