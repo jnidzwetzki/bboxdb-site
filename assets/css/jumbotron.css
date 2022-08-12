@@ -1,0 +1,16 @@
+body {
+	padding-top: 70px;
+	padding-bottom: 0px;
+}
+
+.footer-bottom {
+    min-height: 30px;
+    width: 100%;
+    position: fixed; 
+    bottom: 0%;
+    opacity: 1;
+}
+
+.maincontent {
+    padding-bottom:60px;   /* Height of the footer */
+}
