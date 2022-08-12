@@ -3,7 +3,7 @@
   		<div class="row">
 			<div class="col-sm-12">
 				<img src="assets/images/logo.png" class="img-responsive center-block"
-					width="500px" style="margin-bottom:20px">
+					width="500" alt="BBoxDB Logo" style="margin-bottom:20px">
 			</div>
 		</div>
 
