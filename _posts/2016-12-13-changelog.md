@@ -10,6 +10,7 @@ order: 1
 ### Version 1.0.0 (release candidate 4) - TBA
 - Improvement: Switched to logical clocks for node mutation detection
 - Bugfix: Concurrency issue in replaceEphemeralNode
+- Bugfix: Concurrency issue in BBoxDBInstanceManager
 
 ### Version 1.0.0 (release candidate 3) - 20.07.2022
 - New Feature: Added generator for synthetic data streams
