@@ -7,8 +7,8 @@ date: 2016-12-12 22:46:12
 order: 1
 ---
 
-# An Example with OpenStreetmap Data
-This section covers an example to demonstrate the basic functionality of BBoxDB. Data of the OpenStreetmap project is fechted, converted and imported into a table. Then, some queries are executed on this data set. In this example, the spatial data of Germany is used. Then, all trees around the famous [Alexanderplatz](https://en.wikipedia.org/wiki/Alexanderplatz) (a public square in Berlin) are fetched.
+# An Example with OpenStreetMap Data
+This section covers an example to demonstrate the basic functionality of BBoxDB. Data from the OpenStreetMap project is fetched, converted, and imported into a table. Then, some queries are executed on this data set. In this example, the spatial data of Germany is used. Then, all trees around the famous [Alexanderplatz](https://en.wikipedia.org/wiki/Alexanderplatz) (a public square in Berlin) are fetched.
 
 ## Viewing the discovered BBoxDB instances
 Before the data is imported, it is useful to verify that all started instances of BBoxDB are discovered and ready. This task can be done via the 'show_instances' action of the CLI.
@@ -68,7 +68,7 @@ $ $BBOXDB_HOME/bin/cli.sh -action import -file /path/to/TREE -format geojson -ta
 Now, the stored data can be accessed. The data importer uses a consecutive number for each object. Therefore, to fetch the object with the key '120', the following command can be used:
 
 ```bash
-$ $BBOXDB_HOME/bin/cli.sh -action query -table mydgroup_germanytree -key 120
+$ $BBOXDB_HOME/bin/cli.sh -action query_key -table mydgroup_germanytree -key 120
 
 Connecting to BBoxDB cluster... [Established]
 Executing key query..
@@ -76,10 +76,10 @@ Key 120, BoundingBox=[52.546123300000005:52.546123300000005,13.350283200000002:1
 Query done
 ```
 
-The tuple is loaded from BBoxDB and printed on the console. The Key, the Bounding Box and the GeoJSON data (the value) of the tuple are printed. The area around the Alexanderplatz can be roughly expressed by a square with the following coordinates: 13.410, 52.520 for the lower left corner and 13.415, 52.525 for the upper right corner. The following command can be used, to fetch all trees, which lie inside of the square:
+The tuple is loaded from BBoxDB and printed on the console. The Key, the Bounding Box and the GeoJSON data (the value) of the tuple are printed. The area around the Alexanderplatz can be roughly expressed by a square with the following coordinates: 13.410, 52.520 for the lower left corner, and 13.415, 52.525 for the upper right corner. The following command can be used to fetch all trees which are inside of the square:
 
 ```bash
-$BBOXDB_HOME/bin/cli.sh -action query -table mydgroup_germanytree -bbox [[52.520,52.525]:[13.410,13.415]]
+$BBOXDB_HOME/bin/cli.sh -action query_range -table mydgroup_germanytree -bbox [[52.520,52.525]:[13.410,13.415]]
 
 [...]
 Key 37587, BoundingBox=[52.4558036:52.4558036,13.4450991:13.4450991], value={"geometry":{"coordinates":[52.4558036,13.4450991],"type":"Point"},"id":3451433771,"type":"Feature","properties":{"natural":"tree","leaf_cycle":"deciduous","leaf_type":"broadleaved"}}, version timestamp=1493788236276020
@@ -108,7 +108,7 @@ Region 2, Bounding Box=Dimension:0 (52.5145621,max], Dimension:1 [min,max], Stat
 [....]
 ```
 
-It can be seen, that the data of the region 0 is split. Region 1 stores the data that belongs to the bounding box Dimension:0 [min,52.5145621], Dimension:1 [min,max]. Region 2 stores the remaining data. The  region 1 is stored on the systems '192.168.1.189:50505, 192.168.1.192:50505' the region 2 is stored on the systems '192.168.1.181:50505, 192.168.1.199:50505'.
+It can be seen that the data of region 0 is split. Region 1 stores the data that belongs to the bounding box Dimension:0 [min,52.5145621], Dimension:1 [min,max]. Region 2 stores the remaining data. The region 1 is stored on the systems '192.168.1.189:50505, 192.168.1.192:50505' the region 2 is stored on the systems '192.168.1.181:50505, 192.168.1.199:50505'.
 
 ### Via the Graphical User Interface (GUI)
 To use the GUI, please use the following command:
@@ -119,12 +119,12 @@ $ $BBOXDB_HOME/bin/gui.sh
 
 <p><img src="/assets/doc-images/bboxdb_gui1.jpg" width="400"></p>
 
-After connecting to BBoxDB, the GUI shows all discovered distribution groups on the left side. On the bottom, all known BBoxDB-nodes and their state are shown. In the middle of the GUI, the K-D Tree of the distribution group is printed. For two-dimensional distribution groups which work with WGS84 coordinates, an overlay for OpenStreetMap data can be displayed.
+After connecting to BBoxDB, the GUI shows all discovered distribution groups on the left side. On the bottom, all known BBoxDB-nodes and their state are shown. In the middle of the GUI, the K-D Tree of the distribution group is printed. For two-dimensional distribution groups, which work with WGS84 coordinates, an overlay for OpenStreetMap data can be displayed.
 
 <p><img src="/assets/doc-images/bboxdb_gui2.jpg" width="400"></p>
 
 # Working with the tuple history
-BBoxDB can store a history for each tuple. The history stores a certain amount of old values for each tuple. To use this function, the corresponding table must be allowed to contain duplicates for keys. To prevent the tables from becoming infinitely large, BBoxDB can automatically delete old tuples. This is done, when more then a certain amount of _versions_ for a key contained in the table or then the tuples become older than a certain amount of time (_time to live_).
+BBoxDB can store a history for each tuple. The history stores a certain amount of old values for each tuple. To use this function, the corresponding table must be allowed to contain duplicates for keys. To prevent the tables from becoming infinitely large, BBoxDB can automatically delete old tuples. This is done when more than a certain amount of _versions_ for a key are contained in the table or then the tuples become older than a certain amount of time (_time to live_).
 
 In the following example, a table is created that contains up to three versions for a certain key:
 
@@ -145,7 +145,7 @@ $ $BBOXDB_HOME/bin/cli.sh -action insert -table mydgroup_data -key key1 -bbox [[
 The key query returns the three most recent versions for the key:
 
 ```bash
-$ $BBOXDB_HOME/bin/cli.sh -action query -table mydgroup_data -key key1 
+$ $BBOXDB_HOME/bin/cli.sh -action query_key -table mydgroup_data -key key1 
 Connecting to BBoxDB cluster... [Established]
 Executing key query..
 Key key1, BoundingBox=[[1.0,2.0]:[1.0,2.0]], value=value3, version timestamp=1509699605215000
@@ -154,13 +154,13 @@ Key key1, BoundingBox=[[1.0,2.0]:[1.0,2.0]], value=value5, version timestamp=150
 Query done
 ```
 
-The query retuns three different versions for the key _key1_. The tuples are sorted by the _version timestamp_ and the most recent version of the tuple (with the value of _value5_) is shown at the last postion. 
+The query returns three different versions for the key _key1_. The tuples are sorted by the _version timestamp_, and the most recent version of the tuple (with the value of _value5_) is shown at the last position. 
 
-Now, the tuple for the key is deleted and the key query is executed again. It can be seen that there are still three versions stored for this key. The version with the value "value3" has been removed and a new version (which says that the tuple was deleted) has been added.
+Now, the tuple for the key is deleted and the key query is executed again. It can be seen that there are still three versions stored for this key. The version with the value "value3" has been removed, and a new version (which says that the tuple was deleted) has been added.
 
 ```bash
 $ $BBOXDB_HOME/bin/cli.sh -action delete -table mydgroup_data -key key1
-$ $BBOXDB_HOME/bin/cli.sh -action query -table mydgroup_data -key key1 
+$ $BBOXDB_HOME/bin/cli.sh -action query_key -table mydgroup_data -key key1 
 Connecting to BBoxDB cluster... [Established]
 Executing key query..
 Key key1, BoundingBox=[[1.0,2.0]:[1.0,2.0]], value=value4, version timestamp=1509699607483000
@@ -173,7 +173,7 @@ Query done
 BBoxDB supports continuous bounding box queries. As soon as the query is executed, all tuples that are inserted within the bounding box are captured by this query. To demonstrate this, the continuous bounding box query is started on one console:
 
 ```bash
-console1> $BBOXDB_HOME/bin/cli.sh -action continuous-query -table mydgroup_data -bbox [[0,5]:[0,5]]
+console1> $BBOXDB_HOME/bin/cli.sh -action query_continuous -table mydgroup_data -bbox [[0,5]:[0,5]]
 Connecting to BBoxDB cluster... [Established]
 Executing continuous bounding box query...
 ```
@@ -194,7 +194,7 @@ console2> $BBOXDB_HOME/bin/cli.sh -action insert -table mydgroup_data -key key3 
 As soon as the three tuples are inserted, the query reports two tuples:
 
 ```bash
-console1> $BBOXDB_HOME/bin/cli.sh -action continuous-query -table mydgroup_data -bbox [[0,5]:[0,5]]
+console1> $BBOXDB_HOME/bin/cli.sh -action query_continuous -table mydgroup_data -bbox [[0,5]:[0,5]]
 Connecting to BBoxDB cluster... [Established]
 Executing continuous bounding box query...
 Key key1, BoundingBox=[[1.0,2.0]:[1.0,2.0]], value=value1, version timestamp=1510325620579000
@@ -202,7 +202,7 @@ Key key3, BoundingBox=[[2.0,10.0]:[2.0,10.0]], value=value3, version timestamp=1
 ```
 
 # Executing a join
-In this example, a join on two tables is executed. The join operation returns all tuples of two or more tables in the same distribution group who have overlapping bounding boxes. As the first step in this example, a 2-dimensional distribution group is created with the two tables _ mydgroup_table1_ and _mydgroup_table2_. Afterwards, three tuples are inserted in both tables. 
+In this example, a join on two tables is executed. The join operation returns all tuples of two or more tables in the same distribution group with overlapping bounding boxes. As the first step in this example, a 2-dimensional distribution group is created with the two tables _ mydgroup_table1_ and _mydgroup_table2_. Afterward, three tuples are inserted in both tables. 
 
 ```bash
 # Prepare distribution group and tables
@@ -230,7 +230,7 @@ The tuple _Tuple A_ intersects with _Tuple 2_ and with _Tuple 3_; tuple _Tuple 2
 __Notice__: Please note that the grid in the image is used only to show where the tuples are located in space. The grid does not indicate how the space is divided into distribution regions; this is done by the space partitioner dynamically.
 
 ```bash
-$ $BBOXDB_HOME/bin/cli.sh -action join -table mydgroup_table1:mydgroup_table2 -bbox [[0,10]:[0,8]]
+$ $BBOXDB_HOME/bin/cli.sh -action query_join -table mydgroup_table1:mydgroup_table2 -bbox [[0,10]:[0,8]]
 
 Executing join query...
 ===============
