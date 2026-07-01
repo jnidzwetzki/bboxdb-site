@@ -7,8 +7,14 @@ date: 2016-12-12 22:46:12
 order: 1
 ---
 
-### Version 1.0.0 (release candidate 4) - TBA
+### Version 1.0.0 (release candidate 5) - TBA
+
+### Version 1.0.0 (release candidate 4) - 01.07.2026
+- New feature: Require Java 17
 - Improvement: Switched to logical clocks for node mutation detection
+- Improvement: SpotBugs introduced and fixed several issues
+- Improvement: Testing is now done using TestContainers
+- Improvement: Changed the release channel to https://central.sonatype.com
 - Bugfix: Concurrency issue in replaceEphemeralNode
 - Bugfix: Concurrency issue in BBoxDBInstanceManager
 
